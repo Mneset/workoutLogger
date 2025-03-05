@@ -5,8 +5,10 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        reps: {
+        userId: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+            field: 'user_id'
         },
         notes: {
             type: DataTypes.TEXT,
@@ -16,13 +18,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false
         },
+        workoutHistoryId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'workout_history_id'
+        }
     });
 
     // Associations
 
     SessionLog.associate = (db) => {
         db.SessionLog.belongsTo(db.User, { foreignKey: 'userId' });
-        db.SessionLog.hasMany(db.ExerciseLog, { foreignKey: 'exerciseLogId' });
+        db.SessionLog.hasMany(db.ExerciseLog);
+        db.SessionLog.belongsTo(db.WorkoutHistory, { foreignKey: 'workoutHistoryId' });
     }
 
     return SessionLog;

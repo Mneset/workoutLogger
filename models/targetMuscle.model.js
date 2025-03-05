@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     // Associations
 
     TargetMuscle.associate = (db) => {
-        db.TargetMuscle.belongsToMany(db.Exercise, { through: 'ExerciseTargetMuscle', foreignKey: 'targetMuscleId' });
+        db.TargetMuscle.belongsToMany(db.Exercise, { through: 'exerciseTargetMuscle', foreignKey: 'targetMuscleId' });
     }
+
+    return TargetMuscle;
 };

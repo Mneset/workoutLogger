@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     // Associations
 
     Category.associate = (db) => {
-        db.Category.belongsToMany(db.Exercise, { through: 'ExerciseCategory', foreignKey: 'categoryId' });
+        db.Category.belongsToMany(db.Exercise, { through: 'exerciseCategory', foreignKey: 'categoryId' });
     }
+
+    return Category;
 };

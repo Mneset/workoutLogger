@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 
     WorkoutHistory.associate = (db) => {
         db.WorkoutHistory.belongsTo(db.User, { foreignKey: 'userId' });
-        db.WorkoutHistory.hasMany(db.SessionLog, { foreignKey: 'sessionLogId' });
+        db.WorkoutHistory.hasMany(db.SessionLog);
     };
 
     return WorkoutHistory;
