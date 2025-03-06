@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         }
+    }, {
+        tableName: 'workoutHistory' 
     });
 
     // Associations

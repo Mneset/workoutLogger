@@ -10,12 +10,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
-    });
+    }, {
+        tableName: 'equipment' 
+    }
+);
 
     // Associations
 
     Equipment.associate = (db) => {
-        db.Equipment.belongsToMany(db.Exercise, { through: 'exerciseEquipment', foreignKey: 'equipmentId' });
+        db.Equipment.belongsToMany(db.Exercise, { through: db.ExerciseEquipment, foreignKey: 'equipmentId' });
     }
 
     return Equipment;

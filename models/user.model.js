@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
+    }, {
+        tableName: 'users'
     });
 
     // Associations

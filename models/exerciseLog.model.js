@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         setId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'set_id'
+            field: 'sets_id'
         },
         reps: {
             type: DataTypes.INTEGER,
@@ -32,7 +32,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             field: 'session_log_id'
         }
-    });
+    }, {
+        tableName: 'exerciselog'
+    }
+);
 
     // Associations
 

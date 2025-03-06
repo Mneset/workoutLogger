@@ -14,15 +14,23 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true
         },
-        sessionDate: {
+        sessionDateStart: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true,
+            field: 'session_date_start'
+        },
+        sessionDateEnd: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            field: 'session_date_end'
         },
         workoutHistoryId: {
             type: DataTypes.INTEGER,
             allowNull: true,
             field: 'workout_history_id'
         }
+    }, {
+        tableName: 'sessionlog'
     });
 
     // Associations

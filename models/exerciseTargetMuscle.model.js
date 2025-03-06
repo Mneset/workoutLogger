@@ -3,14 +3,19 @@ module.exports = (sequelize, DataTypes) => {
         exerciseId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            field: 'exercise_id',
             primaryKey: true
         },
         targetMuscleId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            field: 'target_muscle_id',
             primaryKey: true
         }
-    });
+    }, {
+        tableName: 'exercisetargetmuscles',
+    }
+);
 
     // Associations
 

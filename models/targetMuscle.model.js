@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
+    }, {
+        tableName: 'targetmuscles'
     });
 
     // Associations
 
     TargetMuscle.associate = (db) => {
-        db.TargetMuscle.belongsToMany(db.Exercise, { through: 'exerciseTargetMuscle', foreignKey: 'targetMuscleId' });
+        db.TargetMuscle.belongsToMany(db.Exercise, { through: db.ExerciseTargetMuscle, foreignKey: 'targetMuscleId' });
     }
 
     return TargetMuscle;

@@ -10,15 +10,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         }      
+    }, {
+        tableName: 'exercises' 
     });
 
     // Associations
 
     Exercise.associate = (db) => {
         db.Exercise.hasMany(db.ExerciseLog, { foreignKey: 'exerciseId' });
-        db.Exercise.belongsToMany(db.Category, { through: 'exerciseCategory', foreignKey: 'exerciseId' });
-        db.Exercise.belongsToMany(db.Equipment, { through: 'exerciseEquipment', foreignKey: 'exerciseId' });
-        db.Exercise.belongsToMany(db.TargetMuscle, { through: 'exerciseTargetMuscle', foreignKey: 'exerciseId' });
+        db.Exercise.belongsToMany(db.Category, { through: db.ExerciseCategory, foreignKey: 'exerciseId' });
+        db.Exercise.belongsToMany(db.Equipment, { through: db.ExerciseEquipment, foreignKey: 'exerciseId' });
+        db.Exercise.belongsToMany(db.TargetMuscle, { through: db.ExerciseTargetMuscle, foreignKey: 'exerciseId' });
     }
     return Exercise;
 };
