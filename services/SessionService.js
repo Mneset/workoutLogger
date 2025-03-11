@@ -3,6 +3,29 @@ class SessionService {
         this.db = db;
     }
 
+    async getSessionsByUserId(userId) {
+        try {
+            const sessions = await this.db.SessionLog.findAll({
+                where: { userId: userId }
+            });
+            return sessions;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // Display a single session with all its sets, reps, weight, etc
+    async getSessionById(id) {
+        try {
+            const session = await this.db.SessionLog.findOne({
+                where: { id: id }
+            });
+            return session;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async startSession(userId) {
         try {
             const session = await this.db.SessionLog.create({
@@ -31,9 +54,17 @@ class SessionService {
         }
     }
 
-    async endSession() {
+    async endSession(notes, sessionLogId, workoutHistoryId) {
         try {
-            
+            // update sessionLog with sessionDateEnd and workoutHistoryId
+            const session = this.db.SessionLog.update({
+                notes: notes,
+                sessionDateEnd: new Date(),
+                workoutHistoryId: workoutHistoryId
+            }, {
+                where: { id: sessionLogId }
+            });
+            return session;
         } catch (error) {
             throw error;
         }
