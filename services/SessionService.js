@@ -18,7 +18,11 @@ class SessionService {
     async getSessionById(id) {
         try {
             const session = await this.db.SessionLog.findOne({
-                where: { id: id }
+                where: { id: id },
+                include: [{
+                    model: this.db.ExerciseLog,
+                    include: [ this.db.Exercise ]
+                }]
             });
             return session;
         } catch (error) {
