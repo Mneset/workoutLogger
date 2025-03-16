@@ -27,9 +27,9 @@ router.post('/session/exercise', async (req, res) => {
 });
 
 router.put('/session/end', async (req, res) => {
-    const { notes, sessionLogId, workoutHistoryId } = req.body;
+    const { sessionNotes, sessionLogId } = req.body;
     try {
-        const session = await sessionService.endSession(notes, sessionLogId, workoutHistoryId);
+        const session = await sessionService.endSession(sessionNotes, sessionLogId);
         res.status(200).json({ session });
     } catch (error) {
         console.error(error);

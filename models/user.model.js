@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (db) => {
         db.User.belongsTo(db.Role, { foreignKey: 'roleId' });
         db.User.hasMany(db.SessionLog, { foreignKey: 'userId' });
-        db.User.hasOne(db.WorkoutHistory, { foreignKey: 'userId' });
     };
 
     return User;

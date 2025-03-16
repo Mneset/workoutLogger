@@ -24,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             field: 'session_date_end'
         },
-        workoutHistoryId: {
+        workoutPlanId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            field: 'workout_history_id'
+            field: 'workout_plan_id'
         }
     }, {
         tableName: 'sessionlog'
@@ -37,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
 
     SessionLog.associate = (db) => {
         db.SessionLog.belongsTo(db.User, { foreignKey: 'userId' });
-        db.SessionLog.hasMany(db.ExerciseLog);
-        db.SessionLog.belongsTo(db.WorkoutHistory, { foreignKey: 'workoutHistoryId' });
+        db.SessionLog.hasMany(db.ExerciseLog, { foreignKey: 'sessionLogId' });
+        db.SessionLog.belongsTo(db.WorkoutPlan, { foreignKey: 'workoutPlanId'})
     }
 
     return SessionLog;
