@@ -9,7 +9,8 @@ const { initializeDb } = require('./config/database');
 // Defining the routes
 
 const indexRouter = require('./routes/index')
-const sessionRouter = require('./routes/session');
+const newSessionRouter = require('./routes/newSession');
+const sessionHistoryRouter = require('./routes/sessionHistory');
 const apiPreFix = '/api/v1';
 
 // Middleware
@@ -20,7 +21,8 @@ app.use(express.json());
 // Using the routes
 
 app.use(apiPreFix, indexRouter);
-app.use(apiPreFix, sessionRouter);
+app.use(apiPreFix, newSessionRouter);
+app.use(apiPreFix, sessionHistoryRouter);
 
 // Initialize the database
 
