@@ -6,13 +6,18 @@ const sessionService = new SessionService(db);
 
 router.post('/session', async (req, res) => {
     const { userId} = req.body;
+    
+    if(req.auth.sub !== userId) {
+        return res.status(403).json({ message: 'Unauthorized' });
+    }
+
     try {
         const session = await sessionService.startSession(userId);
         res.status(201).json({ session });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to start session' });   
-    }|
+    }
 });
 
 router.post('/session/exercise', async (req, res) => {

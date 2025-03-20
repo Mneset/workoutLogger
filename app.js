@@ -13,7 +13,6 @@ const jwtCheck = auth ({
     tokenSigningAlg: 'RS256'
 });
 
-app.use(jwtCheck);
 
 // Defining the routes
 
@@ -24,16 +23,12 @@ const apiPreFix = '/api/v1';
 
 // Middleware
 
-app.use(cors({
-    origin: 'http://localhost:3001',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Authorization', 'Content-Type'],
-}));
+app.use(cors({origin: 'http://localhost:3001'}));
 app.use(express.json());
 
 // Using the routes
 
-app.use(apiPreFix, indexRouter);
+app.use(apiPreFix, jwtCheck, indexRouter);
 app.use(apiPreFix, newSessionRouter);
 app.use(apiPreFix, sessionHistoryRouter);
 
