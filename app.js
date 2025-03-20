@@ -5,6 +5,15 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 const { initializeDb } = require('./config/database');
+const { auth } = require('express-oauth2-jwt-bearer')
+
+const jwtCheck = auth ({
+    audience: process.env.AUTH_AUDIENCE,
+    issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
+    tokenSigningAlg: 'RS256'
+});
+
+app.use(jwtCheck);
 
 // Defining the routes
 
@@ -15,7 +24,11 @@ const apiPreFix = '/api/v1';
 
 // Middleware
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Authorization', 'Content-Type'],
+}));
 app.use(express.json());
 
 // Using the routes
@@ -36,4 +49,12 @@ initializeDb().then(() => {
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);  
+});
+
+app.use((err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).send('Invalid token');
+    } else {
+        next(err);
+    }
 });
