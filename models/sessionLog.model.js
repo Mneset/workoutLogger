@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     const SessionLog = sequelize.define('SessionLog', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             primaryKey: true,
             autoIncrement: true
         },
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
             field: 'user_id'
         },

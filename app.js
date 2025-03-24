@@ -23,12 +23,17 @@ const apiPreFix = '/api/v1';
 
 // Middleware
 
-app.use(cors({origin: 'http://localhost:3001'}));
+app.use(cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 // Using the routes
-
-app.use(apiPreFix, jwtCheck, indexRouter);
+app.use(jwtCheck);
+app.use(apiPreFix, indexRouter);
 app.use(apiPreFix, newSessionRouter);
 app.use(apiPreFix, sessionHistoryRouter);
 
@@ -48,6 +53,8 @@ app.listen(port, () => {
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
+        console.log("JWT Validation Error:", err.message); // Add this
+        console.log("Token Received:", req.headers.authorization); // Add this
         res.status(401).send('Invalid token');
     } else {
         next(err);

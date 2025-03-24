@@ -5,15 +5,15 @@ const SessionService = require('../services/SessionService');
 const sessionService = new SessionService(db);
 
 router.post('/new-session', async (req, res) => {
-    const { userId} = req.body;
-    console.log('req.auth:', req.auth); // Log the full token payload
-    console.log('userId from body:', userId)
+    const { userId } = req.body;
     
-    if(req.auth.sub !== userId) {
+    if(req.auth.payload.sub !== userId) {
         return res.status(403).json({ message: 'Unauthorized' });
     }
 
     try {
+        
+
         const session = await sessionService.startSession(userId);
         res.status(201).json({ session });
     } catch (error) {
