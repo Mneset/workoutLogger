@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             primaryKey: true,
         },
         username: {
@@ -9,15 +9,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
         },
+        roleId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+            field: 'role_id'
+        }
     }, {
         tableName: 'users'
     });
