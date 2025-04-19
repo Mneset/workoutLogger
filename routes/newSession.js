@@ -17,7 +17,7 @@ router.post('/new-session', async (req, res) => {
     }
     try {
         const session = await sessionService.startSession(userId);
-        res.status(201).json({ session });
+        res.status(201).json({ sessionLogId: session.id });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Failed to start session' });

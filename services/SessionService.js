@@ -6,7 +6,11 @@ class SessionService {
     async getSessionsByUserId(userId) {
         try {
             const sessions = await this.db.SessionLog.findAll({
-                where: { userId: userId }
+                where: { userId: userId },
+                include: [{
+                    model: this.db.ExerciseLog,
+                    include: [ this.db.Exercise ]
+                }]
             });
             return sessions;
         } catch (error) {
