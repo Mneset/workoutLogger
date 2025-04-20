@@ -4,28 +4,30 @@ const axios = require('axios');
 const checkForUser = async (req, res, next) => {
     try {
         const userId = req.auth.payload.sub;
-        const accessToken = req.auth.token; // The raw JWT token
-
-        // Fetch user info from Auth0 /userinfo endpoint
-        const userInfoResponse = await axios.get('https://dev-n8xnfzfw0w26p6nq.us.auth0.com/userinfo', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-
-        const { email, nickname } = userInfoResponse.data;
-
-        // Check if user exists in the database
+        
         let user = await db.User.findByPk(userId);
 
-        if (!user) {
-            user = await db.User.create({
-                id: userId,
-                email: email || `${userId}@example.com`, // Fallback email if not provided
-                username: nickname || `user_${userId}`, // Fallback username if not provided
+        if(!user) {
+            const accessToken = req.auth.token;
+
+            const userInfoResponse = await axios.get('https://dev-n8xnfzfw0w26p6nq.us.auth0.com/userinfo', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
             });
-            console.log('User created:', user);
+
+            const { email, nickname } = userInfoResponse.data;
+
+            if (!user) {
+                user = await db.User.create({
+                    id: userId,
+                    email: email || `${userId}@example.com`,
+                    username: nickname || `user_${userId}`, 
+                });
+                console.log('User created:', user);
+            }
         }
+
         req.user = user;
         next();
     } catch (error) {
