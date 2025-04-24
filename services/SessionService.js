@@ -18,7 +18,6 @@ class SessionService {
         }
     }
 
-    // Display a single session with all its sets, reps, weight, etc
     async getSessionById(id) {
         try {
             const session = await this.db.SessionLog.findOne({
