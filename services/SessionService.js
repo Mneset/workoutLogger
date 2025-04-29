@@ -63,7 +63,6 @@ class SessionService {
 
     async endSession(notes, sessionLogId, workoutHistoryId) {
         try {
-            // update sessionLog with sessionDateEnd and workoutHistoryId
             const session = this.db.SessionLog.update({
                 notes: notes,
                 sessionDateEnd: new Date(),
@@ -77,7 +76,23 @@ class SessionService {
         }
     }
 
+    async getAllExercises() {
+        try {
+            const exercises = await this.db.Exercise.findAll()
+            return exercises;
+        } catch (error) {
+            throw error;
+        }
+    }
     
+    async getAllSetTypes() {
+        try {
+            const setTypes = await this.db.Set.findAll()
+            return setTypes;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 }
 

@@ -60,4 +60,24 @@ router.get('/new-session/:id', async (req, res) => {
     }
 })
 
+router.get('/exercises', async (req, res) => {
+    try {
+        const exercises = await sessionService.getAllExercises()
+        res.status(200).json({ exercises })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to get exercises'})
+    }
+})
+
+router.get('/sets', async (req, res) => {
+    try {
+        const setTypes = await sessionService.getAllSetTypes()
+        res.status(200).json({ setTypes })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to get setTypes'})
+    }
+})
+
 module.exports = router;
