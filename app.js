@@ -13,7 +13,6 @@ const jwtCheck = auth ({
     tokenSigningAlg: 'RS256'
 });
 
-
 // Defining the routes
 
 const indexRouter = require('./routes/index')
@@ -53,8 +52,8 @@ app.listen(port, () => {
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
-        console.log("JWT Validation Error:", err.message); // Add this
-        console.log("Token Received:", req.headers.authorization); // Add this
+        console.log("JWT Validation Error:", err.message);
+        console.log("Token Received:", req.headers.authorization);
         res.status(401).send('Invalid token');
     } else {
         next(err);

@@ -3,6 +3,9 @@ const axios = require('axios');
 
 const checkForUser = async (req, res, next) => {
     try {
+
+        console.log('Checking for user...');
+        
         const userId = req.auth.payload.sub;
         
         let user = await db.User.findByPk(userId);
@@ -27,7 +30,6 @@ const checkForUser = async (req, res, next) => {
                 console.log('User created:', user);
             }
         }
-
         req.user = user;
         next();
     } catch (error) {

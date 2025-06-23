@@ -9,8 +9,8 @@ router.use(checkForUser);
 
 router.post('/new-session', async (req, res) => {
     const { userId } = req.body;
-    console.log('req.auth:', req.auth.payload.sub); 
-    console.log(req.body);  
+    console.log('req.auth:', req.auth.payload.sub);
+    console.log(req.body);
     
     if(req.auth.payload.sub !== userId) {
         return res.status(403).json({ message: 'Unauthorized' });
@@ -79,5 +79,6 @@ router.get('/sets', async (req, res) => {
         res.status(500).json({ message: 'Failed to get setTypes'})
     }
 })
+
 
 module.exports = router;

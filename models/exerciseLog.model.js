@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
 
     ExerciseLog.associate = (db) => {
         db.ExerciseLog.belongsTo(db.Exercise, { foreignKey: 'exerciseId' });
-        db.ExerciseLog.belongsTo(db.SessionLog, { foreignKey: 'sessionLogId' });
+        db.ExerciseLog.belongsTo(db.SessionLog, { foreignKey: 'sessionLogId', onDelete: 'CASCADE' });
         db.ExerciseLog.belongsTo(db.Set, { foreignKey: 'setId' });
     }
 

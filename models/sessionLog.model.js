@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const SessionLog = sequelize.define('SessionLog', {
         id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 
     SessionLog.associate = (db) => {
         db.SessionLog.belongsTo(db.User, { foreignKey: 'userId' });
-        db.SessionLog.hasMany(db.ExerciseLog, { foreignKey: 'sessionLogId' });
+        db.SessionLog.hasMany(db.ExerciseLog, { foreignKey: 'sessionLogId', onDelete: 'CASCADE' });
         db.SessionLog.belongsTo(db.WorkoutPlan, { foreignKey: 'workoutPlanId'})
     }
 

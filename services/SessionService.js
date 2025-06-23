@@ -94,6 +94,17 @@ class SessionService {
         }
     }
 
+    async deleteSession(sessionLogId) {
+        try {
+            const session = await this.db.SessionLog.destroy({
+                where: { id: sessionLogId }
+            });
+            return session;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 module.exports = SessionService;
