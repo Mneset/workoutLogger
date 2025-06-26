@@ -36,9 +36,9 @@ router.post('/new-session/exercise', async (req, res) => {
 });
 
 router.put('/new-session/end', async (req, res) => {
-    const { sessionNotes, sessionLogId } = req.body;
+    const { sessionNotes, sessionLogId, updatedLogs } = req.body;
     try {
-        const session = await sessionService.endSession(sessionNotes, sessionLogId);
+        const session = await sessionService.endSession(sessionNotes, sessionLogId, updatedLogs);
         res.status(200).json({ session });
     } catch (error) {
         console.error(error);
@@ -79,6 +79,18 @@ router.get('/sets', async (req, res) => {
         res.status(500).json({ message: 'Failed to get setTypes'})
     }
 })
+
+router.put('/new-session/exercise-log/:id', async (req, res) => {
+    const { reps, weight, notes } = req.body;
+    const { exerciseLogId } = req.params.id;
+    try {
+        const updatedExerciseLog = await sessionService.updateExerciseLog(exerciseLogId, reps, weight, notes);
+        res.status(200).json({ updatedExerciseLog });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update exercise log' });
+    }
+});
 
 
 module.exports = router;

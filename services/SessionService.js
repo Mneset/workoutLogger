@@ -61,20 +61,41 @@ class SessionService {
         }
     }
 
-    async endSession(notes, sessionLogId, workoutHistoryId) {
-        try {
-            const session = this.db.SessionLog.update({
-                notes: notes,
-                sessionDateEnd: new Date(),
-                workoutHistoryId: workoutHistoryId
-            }, {
-                where: { id: sessionLogId }
-            });
-            return session;
-        } catch (error) {
-            throw error;
+    async endSession(notes, sessionLogId, updatedLogs, workoutHistoryId) {
+    const t = await this.db.sequelize.transaction();
+    try {
+        await this.db.SessionLog.update({
+            notes: notes,
+            sessionDateEnd: new Date(),
+            workoutHistoryId: workoutHistoryId
+        }, {
+            where: { id: sessionLogId },
+            transaction: t
+        });
+
+        if (Array.isArray(updatedLogs)) {
+            for (const log of updatedLogs) {
+                await this.db.ExerciseLog.update(
+                    {
+                        reps: log.reps,
+                        weight: log.weight,
+                        notes: log.notes
+                    },
+                    {
+                        where: { id: log.id },
+                        transaction: t
+                    }
+                );
+            }
         }
+
+        await t.commit();
+        return true;
+    } catch (error) {
+        await t.rollback();
+        throw error;
     }
+}
 
     async getAllExercises() {
         try {
@@ -104,7 +125,19 @@ class SessionService {
             throw error;
         }
     }
-
+    
+    async updateExerciseLog(reps, weight, notes, exerciseLogId) {
+        try {
+            const exerciseLog = await this.db.ExerciseLog.update(
+                { reps, weight, notes },
+                { where: { id: exerciseLogId } }
+            );
+            return exerciseLog;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
+
 
 module.exports = SessionService;
