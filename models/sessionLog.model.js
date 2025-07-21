@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             field: 'user_id'
         },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            unique: false
+        },
         notes: {
             type: DataTypes.TEXT,
             allowNull: true

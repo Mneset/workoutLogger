@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
     WorkoutPlan.associate = (db) => {
         db.WorkoutPlan.hasMany(db.SessionLog, { foreignKey: 'workoutPlanId'})
+        db.WorkoutPlan.hasMany(db.User, { foreignKey: 'workoutPlanId' });
     };
 
     return WorkoutPlan;

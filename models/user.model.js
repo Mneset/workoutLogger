@@ -19,7 +19,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 1,
             field: 'role_id'
-        }
+        },
+        workoutPlanId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            field: 'workout_plan_id'
+        },
     }, {
         tableName: 'users'
     });
@@ -29,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (db) => {
         db.User.belongsTo(db.Role, { foreignKey: 'roleId' });
         db.User.hasMany(db.SessionLog, { foreignKey: 'userId' });
+        db.User.belongsTo(db.WorkoutPlan, { foreignKey: 'workoutPlanId' });
     };
 
     return User;
