@@ -36,9 +36,9 @@ router.post('/new-session/exercise', async (req, res) => {
 });
 
 router.put('/new-session/end', async (req, res) => {
-    const { sessionNotes, sessionLogId, updatedLogs } = req.body;
+    const { notes, sessionLogId, updatedLogs, name } = req.body;
     try {
-        const session = await sessionService.endSession(sessionNotes, sessionLogId, updatedLogs);
+        const session = await sessionService.endSession(notes, sessionLogId, updatedLogs, name);
         res.status(200).json({ session });
     } catch (error) {
         console.error(error);
@@ -82,7 +82,7 @@ router.get('/sets', async (req, res) => {
 
 router.put('/new-session/exercise-log/:id', async (req, res) => {
     const { reps, weight, notes } = req.body;
-    const { exerciseLogId } = req.params.id;
+    const exerciseLogId = req.params.id;
     try {
         const updatedExerciseLog = await sessionService.updateExerciseLog(exerciseLogId, reps, weight, notes);
         res.status(200).json({ updatedExerciseLog });

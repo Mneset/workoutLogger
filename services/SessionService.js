@@ -61,13 +61,13 @@ class SessionService {
         }
     }
 
-    async endSession(notes, sessionLogId, updatedLogs, workoutHistoryId) {
+    async endSession(notes, sessionLogId, updatedLogs, name) {
     const t = await this.db.sequelize.transaction();
     try {
         await this.db.SessionLog.update({
             notes: notes,
             sessionDateEnd: new Date(),
-            workoutHistoryId: workoutHistoryId
+            name: name
         }, {
             where: { id: sessionLogId },
             transaction: t
@@ -99,7 +99,14 @@ class SessionService {
 
     async getAllExercises() {
         try {
-            const exercises = await this.db.Exercise.findAll()
+            const exercises = await this.db.Exercise.findAll({
+                 include: [
+                {
+                    model: this.db.TargetMuscle,
+                    through: { attributes: [] } // Exclude junction table columns
+                }
+            ]
+            })
             return exercises;
         } catch (error) {
             throw error;

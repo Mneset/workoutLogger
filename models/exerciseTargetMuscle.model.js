@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         targetMuscleId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'target_muscle_id',
+            field: 'targetMuscle_id',
             primaryKey: true
         }
     }, {
         tableName: 'exercisetargetmuscles',
-    }
+    } 
 );
 
     // Associations

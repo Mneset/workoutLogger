@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
     }, {
-        tableName: 'roles' 
+        tableName: 'role' 
     });
 
     // Associations
