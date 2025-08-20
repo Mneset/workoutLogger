@@ -6,6 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const { initializeDb } = require('./config/database');
 const { auth } = require('express-oauth2-jwt-bearer')
+const { errorHandler } = require('./utils/errorHandler');
 
 const jwtCheck = auth ({
     audience: process.env.AUTH_AUDIENCE,
@@ -50,12 +51,8 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);  
 });
 
-app.use((err, req, res, next) => {
-    if (err.name === 'UnauthorizedError') {
-        console.log("JWT Validation Error:", err.message);
-        console.log("Token Received:", req.headers.authorization);
-        res.status(401).send('Invalid token');
-    } else {
-        next(err);
-    }
+app.use(function(req, res, next) {
+  next(createError(404));
 });
+
+app.use(errorHandler);

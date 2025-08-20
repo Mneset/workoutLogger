@@ -60,6 +60,18 @@ router.get('/new-session/:id', async (req, res) => {
     }
 })
 
+router.put('/new-session/exercise-log/:id', async (req, res) => {
+    const { reps, weight, notes } = req.body;
+    const exerciseLogId = req.params.id;
+    try {
+        const updatedExerciseLog = await sessionService.updateExerciseLog(exerciseLogId, reps, weight, notes);
+        res.status(200).json({ updatedExerciseLog });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to update exercise log' });
+    }
+});
+
 router.get('/exercises', async (req, res) => {
     try {
         const exercises = await sessionService.getAllExercises()
@@ -80,17 +92,7 @@ router.get('/sets', async (req, res) => {
     }
 })
 
-router.put('/new-session/exercise-log/:id', async (req, res) => {
-    const { reps, weight, notes } = req.body;
-    const exerciseLogId = req.params.id;
-    try {
-        const updatedExerciseLog = await sessionService.updateExerciseLog(exerciseLogId, reps, weight, notes);
-        res.status(200).json({ updatedExerciseLog });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Failed to update exercise log' });
-    }
-});
+
 
 
 module.exports = router;
