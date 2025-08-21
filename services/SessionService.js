@@ -45,22 +45,6 @@ class SessionService {
         }     
     }
 
-    async addExerciseLogToSession(exerciseId, setId, reps, weight, notes, sessionLogId) {
-        try {
-            const exerciseLog = await this.db.ExerciseLog.create({
-                exerciseId,
-                setId,
-                reps,
-                weight,
-                notes,
-                sessionLogId
-            })
-            return exerciseLog
-        } catch (error) {
-            throw error;
-        }
-    }
-
     async endSession(notes, sessionLogId, updatedLogs, name) {
     const t = await this.db.sequelize.transaction();
     try {
@@ -97,49 +81,12 @@ class SessionService {
     }
 }
 
-    async getAllExercises() {
-        try {
-            const exercises = await this.db.Exercise.findAll({
-                 include: [
-                {
-                    model: this.db.TargetMuscle,
-                    through: { attributes: [] } // Exclude junction table columns
-                }
-            ]
-            })
-            return exercises;
-        } catch (error) {
-            throw error;
-        }
-    }
-    
-    async getAllSetTypes() {
-        try {
-            const setTypes = await this.db.Set.findAll()
-            return setTypes;
-        } catch (error) {
-            throw error;
-        }
-    }
-
     async deleteSession(sessionLogId) {
         try {
             const session = await this.db.SessionLog.destroy({
                 where: { id: sessionLogId }
             });
             return session;
-        } catch (error) {
-            throw error;
-        }
-    }
-    
-    async updateExerciseLog(reps, weight, notes, exerciseLogId) {
-        try {
-            const exerciseLog = await this.db.ExerciseLog.update(
-                { reps, weight, notes },
-                { where: { id: exerciseLogId } }
-            );
-            return exerciseLog;
         } catch (error) {
             throw error;
         }

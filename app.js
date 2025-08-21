@@ -17,8 +17,9 @@ const jwtCheck = auth ({
 // Defining the routes
 
 const indexRouter = require('./routes/index')
-const newSessionRouter = require('./routes/newSession');
-const sessionHistoryRouter = require('./routes/sessionHistory');
+const sessionRouter = require('./routes/sessionLog');
+const setsRouter = require('./routes/sets');
+const exercisesRouter = require('./routes/exerciseLog');
 const apiPreFix = '/api/v1';
 
 // Middleware
@@ -34,8 +35,9 @@ app.use(express.json());
 // Using the routes
 app.use(jwtCheck);
 app.use(apiPreFix, indexRouter);
-app.use(apiPreFix, newSessionRouter);
-app.use(apiPreFix, sessionHistoryRouter);
+app.use(`${apiPreFix}/session`, sessionRouter);
+app.use(`${apiPreFix}/sets`, setsRouter);
+app.use(`${apiPreFix}/exercise-log`, exercisesRouter);
 
 // Initialize the database
 
